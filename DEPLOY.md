@@ -1,123 +1,113 @@
-# Deploy lên Cloudflare Pages
+# Deploy lên Vercel (domain trustpage.info)
 
-Trang tĩnh thuần, không backend, không build step → Cloudflare Pages chỉ việc phục vụ
-nguyên thư mục `web/`.
+Trang tĩnh thuần: không backend, không build step, không database. Vercel chỉ việc
+phục vụ nguyên thư mục `web/`.
 
----
+## Vì sao Vercel chứ không Cloudflare Pages
 
-## ⚠️ Đọc trước: apex `trustpage.info` ĐANG CÓ SẢN PHẨM KHÁC
+Vì `trustpage.info` **đã trỏ sẵn vào Vercel**:
 
-Tính tới 18/08/2026:
+```
+trustpage.info      A     76.76.21.21          (Vercel)
+www.trustpage.info  CNAME cname.vercel-dns.com (Vercel)
+nameserver          ns1/ns2.matbao.com
+MX                  mx.zoho.com                (email đang chạy)
+```
 
-| Thứ | Trạng thái |
+Dùng Vercel thì việc đổi domain sang dự án này **không đụng gì tới DNS ở Mat Bao** —
+chỉ là gỡ domain khỏi project cũ rồi gắn vào project mới, ngay trong dashboard Vercel.
+
+Nếu chuyển sang Cloudflare Pages thì phải dời nameserver về Cloudflare, kéo theo phải
+tạo lại `MX → mx.zoho.com` và TXT xác minh Zoho. Thiếu là **mất email của cả domain**.
+Đổi lấy rủi ro đó mà chẳng được thêm gì cho một trang tĩnh.
+
+## Giới hạn gói Hobby (free)
+
+| | |
 |---|---|
-| `trustpage.info` | đang chạy **"TrustPage — Đâu là thông tin chính thức?"**, host trên Vercel (A → `76.76.21.21`) |
-| `www.trustpage.info` | CNAME → `cname.vercel-dns.com` |
-| Nameserver | `ns1/ns2.matbao.com` — **không** ở Cloudflare |
-| Email | `MX → mx.zoho.com`, có TXT xác minh Zoho |
+| Fast Data Transfer | **100 GB/tháng** |
+| Một lượt xem đầy đủ | ~3,7 MB (video 3,3 MB + jsQR 251 KB + html/json) |
+| ⇒ sức chứa | khoảng **27.000 lượt/tháng** |
 
-Hệ quả:
+Thừa sức cho một chùa. Vượt hạn mức thì tính năng ngưng tới hết chu kỳ 30 ngày chứ
+không tự tính tiền.
 
-- Trỏ apex sang Cloudflare Pages sẽ **thay thế trang đang sống**. Đừng làm trừ khi
-  đó đúng là ý định.
-- Muốn dùng apex trên Cloudflare thì phải chuyển nameserver về Cloudflare, và phải
-  tạo lại **MX + TXT của Zoho** trong DNS Cloudflare, nếu không sẽ **mất email**.
-
-→ Dùng **subdomain**. Không đụng trang đang chạy, không đụng email, không phải chuyển
-nameserver. Dưới đây dùng `phat.trustpage.info` làm ví dụ.
+**Một điều cần biết:** tài liệu Vercel ghi rõ gói Hobby *"restricts users to
+non-commercial, personal use only"*. Trang giới thiệu của chùa, không bán gì, thì
+thường không sao. Nhưng nếu đây là dự án Rytek làm có thu phí cho khách thì đúng nghĩa
+là commercial, lúc đó phải lên Pro (20 USD/tháng). Ông tự cân nhắc, tôi chỉ nêu.
 
 ---
 
-## Bước 1 — Tạo project, nối thẳng repo GitHub
+## Bước 1 — Tạo project mới từ repo GitHub
 
-Nối Git thay vì kéo thả thư mục: về sau `git push` là tự deploy, không phải upload tay.
+Nối Git chứ đừng upload tay: sau này `git push` là tự deploy.
 
-1. Vào [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** →
-   **Create** → tab **Pages** → **Connect to Git**.
-2. Authorize GitHub. Repo `buddha` thuộc account **rytekvn**, nên khi GitHub hỏi cài
-   Cloudflare app thì phải chọn đúng account `rytekvn` (không phải `ryantranvortech`),
-   rồi cấp quyền cho repo `buddha`.
-3. Chọn repo `rytekvn/buddha` → **Begin setup**.
+1. [vercel.com/new](https://vercel.com/new) → **Import Git Repository**.
+2. Nếu chưa thấy repo `buddha`: bấm **Adjust GitHub App Permissions**, chọn đúng
+   account **`rytekvn`** (không phải `ryantranvortech`) và cấp quyền cho repo `buddha`.
+3. Chọn `rytekvn/buddha` → **Import**.
 
-## Bước 2 — Cấu hình build
+## Bước 2 — Cấu hình
 
-Đây là bước duy nhất dễ sai. Điền đúng như sau:
+Bước duy nhất dễ sai:
 
 | Trường | Giá trị |
 |---|---|
-| Production branch | `main` |
-| Framework preset | **None** |
-| Build command | **để trống** |
-| Build output directory | **`web`** ← quan trọng nhất |
-| Root directory | để mặc định (`/`) |
+| Framework Preset | **Other** |
+| **Root Directory** | **`web`** ← quan trọng nhất |
+| Build Command | để trống (tắt Override) |
+| Output Directory | để trống |
+| Install Command | để trống |
 
-`web` là thư mục chứa `index.html`. Để trống ô này thì Cloudflare sẽ phục vụ gốc repo
-và trang ra 404.
+`web` là thư mục chứa `index.html`. Để nguyên gốc repo thì Vercel sẽ phục vụ cả
+`plan/`, `spec/`, `dev.sh`… và trang ra 404.
 
-Bấm **Save and Deploy**. Xong sẽ có URL dạng `buddha-xxx.pages.dev`.
+Bấm **Deploy**. Xong có URL dạng `buddha-xxx.vercel.app`.
 
-## Bước 3 — Test trên URL pages.dev trước
+## Bước 3 — Test trên URL vercel.app TRƯỚC khi đổi domain
 
-`*.pages.dev` đã có HTTPS nên camera chạy được. Mở trên iPhone và kiểm:
+URL đó đã có HTTPS nên camera chạy được. Mở trên iPhone và kiểm:
 
-- [ ] Tab Quét QR xin quyền camera và mở được hình
+- [ ] Tab Quét QR xin quyền camera, hiện được hình
 - [ ] Chĩa vào `qr/dia-tang.png` → nhảy sang tab Giới thiệu đúng tượng
 - [ ] Video phát được **có tiếng**
 - [ ] Tab bar không bị thanh home indicator che
 - [ ] Mở thẳng `<url>/?v=dia-tang` → vào ngay tab Giới thiệu
 
-Hỏng ở bước này thì sửa rồi push, Cloudflare tự deploy lại.
+Hỏng thì sửa rồi push, Vercel tự deploy lại. **Chưa đụng tới domain ở bước này**, nên
+trang TrustPage cũ vẫn chạy bình thường trong lúc test.
 
-## Bước 4 — Gắn subdomain
+## Bước 4 — Chuyển domain sang project mới
 
-1. Trong project Pages → **Custom domains** → **Set up a domain** → nhập
-   `phat.trustpage.info`.
-2. Vì `trustpage.info` không nằm trong account Cloudflare, nó sẽ **không** tự tạo DNS
-   mà đưa cho ông một giá trị CNAME (chính là `buddha-xxx.pages.dev`).
-3. Vào trang quản trị **Mat Bao** → DNS của `trustpage.info` → thêm bản ghi:
+Chỉ làm khi bước 3 đã đạt.
 
-   | Type | Name | Value | TTL |
-   |---|---|---|---|
-   | CNAME | `phat` | `buddha-xxx.pages.dev` | mặc định |
+1. Project **cũ** (TrustPage) → **Settings** → **Domains** → gỡ `trustpage.info`
+   và `www.trustpage.info`.
+2. Project **mới** (buddha) → **Settings** → **Domains** → thêm `trustpage.info`,
+   rồi thêm `www.trustpage.info` (để nó redirect về apex).
+3. Xong. **Không cần sửa gì ở Mat Bao** — bản ghi A và CNAME đã trỏ đúng Vercel rồi.
+   HTTPS Vercel tự cấp lại, thường trong vài phút.
 
-   Chỉ thêm bản ghi mới. **Không sửa, không xoá** bản ghi A của apex, CNAME `www`,
-   hay MX/TXT của Zoho.
-4. Quay lại Cloudflare bấm kiểm tra. Chờ từ vài phút tới vài tiếng tuỳ TTL.
-   HTTPS Cloudflare tự cấp.
+**Đừng xoá project cũ.** Chỉ gỡ domain thôi. Nó vẫn sống ở URL `*.vercel.app` của nó,
+lỡ cần lấy lại nội dung hay đổi ý thì gắn domain về là xong. Xoá project là không lùi được.
 
-## Bước 5 — Cập nhật URL trong dự án
+## Bước 5 — Sau khi domain chạy
 
-Sau khi subdomain chạy:
+Không phải sinh lại gì cả: `qr/dia-tang.png` và `qr/tuong-2.png` đã trỏ sẵn
+`https://trustpage.info/?v=<id>`, và `og:url` trong `index.html` cũng đã đúng.
 
-```bash
-./qr.sh https://phat.trustpage.info    # sinh lại QR trỏ domain thật
-```
-
-Và sửa `og:url` trong `web/index.html` thành `https://phat.trustpage.info/`, rồi push.
-
-In QR tối thiểu 3×3 cm để camera bắt được ở khoảng cách 20–30 cm.
+Chỉ việc in QR, tối thiểu 3×3 cm để camera bắt được ở khoảng cách 20–30 cm.
 
 ---
 
-## Không cần file `_headers`
+## Không thêm `vercel.json`
 
-Mặc định của Cloudflare Pages không chặn camera. **Đừng** copy header của trang
-trustpage.info hiện tại sang — trang đó gửi `permissions-policy: camera=()`, bê sang
-đây là tab Quét QR chết câm mà không báo lỗi gì.
+Repo cố tình không có file này. Trang TrustPage cũ gửi header
+`permissions-policy: camera=()` — bê cấu hình đó sang là **tab Quét QR chết câm**, không
+báo lỗi gì cả. Project mới dùng repo mới nên không kế thừa, cứ để mặc định.
 
 ## Cập nhật nội dung về sau
 
-Sửa `web/content.json` (thêm mp4 vào `web/videos/` nếu có tượng mới) → `git push`.
-Cloudflare tự deploy. Thêm tượng thì chạy lại `./qr.sh https://phat.trustpage.info`.
-
-## Nếu vẫn muốn dùng apex `trustpage.info`
-
-Phải chấp nhận cả ba việc sau, làm thiếu một là hỏng:
-
-1. Trang TrustPage hiện tại trên Vercel sẽ bị thay thế — cần chốt là bỏ hẳn hay dời đi đâu.
-2. Chuyển nameserver `trustpage.info` từ Mat Bao sang Cloudflare.
-3. Trước khi chuyển, **chép lại toàn bộ bản ghi DNS hiện có** (nhất là `MX → mx.zoho.com`
-   và TXT `zoho-verification=...`) rồi tạo lại đủ trong Cloudflare DNS. Thiếu MX là
-   mất email của cả domain.
-
-Rẻ hơn nhiều so với việc dùng subdomain, mà chẳng được thêm gì.
+Sửa `web/content.json` (thêm mp4 vào `web/videos/` nếu có tượng mới) → `git push` →
+Vercel tự deploy. Thêm tượng thì chạy `./qr.sh` để có QR của tượng đó.

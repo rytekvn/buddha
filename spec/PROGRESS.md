@@ -72,21 +72,28 @@ autoplay có tiếng, safe-area.
 - Vanilla HTML/CSS/JS, không framework, không build step.
 - Host: Cloudflare Pages + trustpage.info.
 
-## Phát hiện về domain (18/08/2026)
+## Domain & hosting (chốt 18/08/2026)
 
-`trustpage.info` **đang chạy sản phẩm khác**: "TrustPage — Đâu là thông tin chính thức?",
-host trên Vercel (A → 76.76.21.21, www → cname.vercel-dns.com). Nameserver ở Mat Bao,
-email chạy qua Zoho (MX + TXT). Trỏ apex sang Cloudflare sẽ thay thế trang đó và có
-nguy cơ mất email.
+`trustpage.info` **sẽ dùng cho dự án này**, trang TrustPage cũ bỏ.
 
-→ **Quyết định: dùng subdomain**, ví dụ `phat.trustpage.info`. Chỉ thêm 1 bản ghi CNAME
-ở Mat Bao, không đụng apex, www, MX, TXT. Chi tiết trong `DEPLOY.md`.
+Host: **Vercel**, không phải Cloudflare Pages. Lý do: domain đã trỏ sẵn Vercel
+(A 76.76.21.21, www → cname.vercel-dns.com), nameserver ở Mat Bao, email chạy qua Zoho.
+Đổi domain sang project mới chỉ là thao tác trong dashboard Vercel, **không đụng DNS ở
+Mat Bao**, nên không có rủi ro mất email. Đi Cloudflare Pages thì phải dời nameserver và
+tạo lại MX/TXT Zoho — rủi ro thật, đổi lại chẳng được gì cho một trang tĩnh.
 
-Lưu ý: trang trustpage.info hiện tại gửi header `permissions-policy: camera=()`. Không
-được bê cấu hình đó sang, nếu không tab Quét QR chết câm.
+Gói Hobby: 100 GB/tháng ≈ 27.000 lượt xem (mỗi lượt ~3,7 MB). Lưu ý Hobby giới hạn
+"non-commercial, personal use" — nếu đây là dự án có thu phí thì phải lên Pro 20 USD/tháng.
 
-QR trong `qr/` đang trỏ apex `https://trustpage.info/?v=<id>` — **phải sinh lại** bằng
-`./qr.sh https://phat.trustpage.info` sau khi chốt subdomain.
+Hai điểm dễ vỡ, đã ghi trong DEPLOY.md:
+- **Root Directory = `web`** khi tạo project, không thì Vercel phục vụ gốc repo → 404.
+- Không thêm `vercel.json`. Trang cũ gửi `permissions-policy: camera=()`; bê sang là
+  tab Quét QR chết câm mà không báo lỗi.
+
+Thứ tự an toàn: deploy → test trên `*.vercel.app` → **rồi mới** gỡ domain khỏi project cũ
+và gắn sang project mới. Không xoá project cũ, chỉ gỡ domain (xoá là không lùi được).
+
+QR trong `qr/` và `og:url` đã trỏ đúng `https://trustpage.info` — không phải sinh lại.
 
 ## Việc còn lại
 
@@ -96,13 +103,12 @@ QR trong `qr/` đang trỏ apex `https://trustpage.info/?v=<id>` — **phải si
    `ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 26 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4`
    rồi sửa trường `video` trong content.json.
 4. Test trên iPhone thật: `./dev.sh` → mở URL ngrok → quét QR trong app.
-5. Deploy theo `DEPLOY.md`: nối repo GitHub vào Cloudflare Pages, **build output
-   directory = `web`**, test trên `*.pages.dev` trước, rồi gắn subdomain.
-6. Chốt subdomain → `./qr.sh https://<subdomain>` → sửa `og:url` trong index.html → in QR.
+5. Deploy theo `DEPLOY.md`: import repo vào Vercel, **Root Directory = `web`**,
+   test trên `*.vercel.app` trước, rồi mới chuyển domain sang.
+6. In QR (đã sinh sẵn, trỏ đúng apex).
 
 ## Chưa xác nhận với user
 
 - `Video 3.mp4` là tượng thứ hai hay bản nháp khác của cùng tượng (đang để tạm id
   `tuong-2`, đổi slug khi biết tên thật).
 - Tên chùa và thông tin tab 4.
-- Subdomain dùng cho app (đề xuất `phat.trustpage.info`).
