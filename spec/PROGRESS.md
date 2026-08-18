@@ -72,6 +72,22 @@ autoplay có tiếng, safe-area.
 - Vanilla HTML/CSS/JS, không framework, không build step.
 - Host: Cloudflare Pages + trustpage.info.
 
+## Phát hiện về domain (18/08/2026)
+
+`trustpage.info` **đang chạy sản phẩm khác**: "TrustPage — Đâu là thông tin chính thức?",
+host trên Vercel (A → 76.76.21.21, www → cname.vercel-dns.com). Nameserver ở Mat Bao,
+email chạy qua Zoho (MX + TXT). Trỏ apex sang Cloudflare sẽ thay thế trang đó và có
+nguy cơ mất email.
+
+→ **Quyết định: dùng subdomain**, ví dụ `phat.trustpage.info`. Chỉ thêm 1 bản ghi CNAME
+ở Mat Bao, không đụng apex, www, MX, TXT. Chi tiết trong `DEPLOY.md`.
+
+Lưu ý: trang trustpage.info hiện tại gửi header `permissions-policy: camera=()`. Không
+được bê cấu hình đó sang, nếu không tab Quét QR chết câm.
+
+QR trong `qr/` đang trỏ apex `https://trustpage.info/?v=<id>` — **phải sinh lại** bằng
+`./qr.sh https://phat.trustpage.info` sau khi chốt subdomain.
+
 ## Việc còn lại
 
 1. Điền `temple` trong `web/content.json` (tên chùa, địa chỉ, maps, 3 section).
@@ -80,10 +96,13 @@ autoplay có tiếng, safe-area.
    `ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 26 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4`
    rồi sửa trường `video` trong content.json.
 4. Test trên iPhone thật: `./dev.sh` → mở URL ngrok → quét QR trong app.
-5. Deploy theo `DEPLOY.md`, rồi `./qr.sh` và in QR.
+5. Deploy theo `DEPLOY.md`: nối repo GitHub vào Cloudflare Pages, **build output
+   directory = `web`**, test trên `*.pages.dev` trước, rồi gắn subdomain.
+6. Chốt subdomain → `./qr.sh https://<subdomain>` → sửa `og:url` trong index.html → in QR.
 
 ## Chưa xác nhận với user
 
 - `Video 3.mp4` là tượng thứ hai hay bản nháp khác của cùng tượng (đang để tạm id
   `tuong-2`, đổi slug khi biết tên thật).
 - Tên chùa và thông tin tab 4.
+- Subdomain dùng cho app (đề xuất `phat.trustpage.info`).

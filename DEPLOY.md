@@ -1,42 +1,123 @@
-# Deploy lên trustpage.info
+# Deploy lên Cloudflare Pages
 
-Trang tĩnh thuần, không backend, không build step → chỉ cần đẩy nguyên thư mục `web/`.
+Trang tĩnh thuần, không backend, không build step → Cloudflare Pages chỉ việc phục vụ
+nguyên thư mục `web/`.
 
-## Cloudflare Pages (khuyến nghị)
+---
 
-1. dash.cloudflare.com → **Workers & Pages** → **Create** → **Pages** →
-   **Upload assets**.
-2. Kéo thả thư mục `web/`. Build command: **để trống**. Output directory: `/`.
-3. Deploy xong sẽ có URL `*.pages.dev` — test trước ở đó.
-4. **Custom domains** → **Set up a domain** → nhập `trustpage.info`.
-   - Nếu domain đã ở Cloudflare: bấm 1 nút là xong, DNS tự tạo.
-   - Nếu chưa: đổi nameserver của `trustpage.info` sang Cloudflare (registrar hiện
-     tại → Nameservers), chờ DNS lan, rồi làm lại bước này.
-5. HTTPS tự cấp, không phải làm gì. **Bắt buộc phải có HTTPS** — tab Quét QR dùng
-   camera, `getUserMedia` chỉ chạy trên secure context.
+## ⚠️ Đọc trước: apex `trustpage.info` ĐANG CÓ SẢN PHẨM KHÁC
 
-Băng thông không giới hạn ở gói free, hợp với việc phục vụ video.
+Tính tới 18/08/2026:
 
-## Sau khi domain chạy
+| Thứ | Trạng thái |
+|---|---|
+| `trustpage.info` | đang chạy **"TrustPage — Đâu là thông tin chính thức?"**, host trên Vercel (A → `76.76.21.21`) |
+| `www.trustpage.info` | CNAME → `cname.vercel-dns.com` |
+| Nameserver | `ns1/ns2.matbao.com` — **không** ở Cloudflare |
+| Email | `MX → mx.zoho.com`, có TXT xác minh Zoho |
+
+Hệ quả:
+
+- Trỏ apex sang Cloudflare Pages sẽ **thay thế trang đang sống**. Đừng làm trừ khi
+  đó đúng là ý định.
+- Muốn dùng apex trên Cloudflare thì phải chuyển nameserver về Cloudflare, và phải
+  tạo lại **MX + TXT của Zoho** trong DNS Cloudflare, nếu không sẽ **mất email**.
+
+→ Dùng **subdomain**. Không đụng trang đang chạy, không đụng email, không phải chuyển
+nameserver. Dưới đây dùng `phat.trustpage.info` làm ví dụ.
+
+---
+
+## Bước 1 — Tạo project, nối thẳng repo GitHub
+
+Nối Git thay vì kéo thả thư mục: về sau `git push` là tự deploy, không phải upload tay.
+
+1. Vào [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** →
+   **Create** → tab **Pages** → **Connect to Git**.
+2. Authorize GitHub. Repo `buddha` thuộc account **rytekvn**, nên khi GitHub hỏi cài
+   Cloudflare app thì phải chọn đúng account `rytekvn` (không phải `ryantranvortech`),
+   rồi cấp quyền cho repo `buddha`.
+3. Chọn repo `rytekvn/buddha` → **Begin setup**.
+
+## Bước 2 — Cấu hình build
+
+Đây là bước duy nhất dễ sai. Điền đúng như sau:
+
+| Trường | Giá trị |
+|---|---|
+| Production branch | `main` |
+| Framework preset | **None** |
+| Build command | **để trống** |
+| Build output directory | **`web`** ← quan trọng nhất |
+| Root directory | để mặc định (`/`) |
+
+`web` là thư mục chứa `index.html`. Để trống ô này thì Cloudflare sẽ phục vụ gốc repo
+và trang ra 404.
+
+Bấm **Save and Deploy**. Xong sẽ có URL dạng `buddha-xxx.pages.dev`.
+
+## Bước 3 — Test trên URL pages.dev trước
+
+`*.pages.dev` đã có HTTPS nên camera chạy được. Mở trên iPhone và kiểm:
+
+- [ ] Tab Quét QR xin quyền camera và mở được hình
+- [ ] Chĩa vào `qr/dia-tang.png` → nhảy sang tab Giới thiệu đúng tượng
+- [ ] Video phát được **có tiếng**
+- [ ] Tab bar không bị thanh home indicator che
+- [ ] Mở thẳng `<url>/?v=dia-tang` → vào ngay tab Giới thiệu
+
+Hỏng ở bước này thì sửa rồi push, Cloudflare tự deploy lại.
+
+## Bước 4 — Gắn subdomain
+
+1. Trong project Pages → **Custom domains** → **Set up a domain** → nhập
+   `phat.trustpage.info`.
+2. Vì `trustpage.info` không nằm trong account Cloudflare, nó sẽ **không** tự tạo DNS
+   mà đưa cho ông một giá trị CNAME (chính là `buddha-xxx.pages.dev`).
+3. Vào trang quản trị **Mat Bao** → DNS của `trustpage.info` → thêm bản ghi:
+
+   | Type | Name | Value | TTL |
+   |---|---|---|---|
+   | CNAME | `phat` | `buddha-xxx.pages.dev` | mặc định |
+
+   Chỉ thêm bản ghi mới. **Không sửa, không xoá** bản ghi A của apex, CNAME `www`,
+   hay MX/TXT của Zoho.
+4. Quay lại Cloudflare bấm kiểm tra. Chờ từ vài phút tới vài tiếng tuỳ TTL.
+   HTTPS Cloudflare tự cấp.
+
+## Bước 5 — Cập nhật URL trong dự án
+
+Sau khi subdomain chạy:
 
 ```bash
-./qr.sh
+./qr.sh https://phat.trustpage.info    # sinh lại QR trỏ domain thật
 ```
 
-Sinh `qr/<id>.png` trỏ `https://trustpage.info/?v=<id>` cho mọi id trong
-`content.json`. In tối thiểu 3×3 cm để camera bắt được ở khoảng cách 20–30 cm.
+Và sửa `og:url` trong `web/index.html` thành `https://phat.trustpage.info/`, rồi push.
+
+In QR tối thiểu 3×3 cm để camera bắt được ở khoảng cách 20–30 cm.
+
+---
+
+## Không cần file `_headers`
+
+Mặc định của Cloudflare Pages không chặn camera. **Đừng** copy header của trang
+trustpage.info hiện tại sang — trang đó gửi `permissions-policy: camera=()`, bê sang
+đây là tab Quét QR chết câm mà không báo lỗi gì.
 
 ## Cập nhật nội dung về sau
 
-Sửa `web/content.json` (và thêm mp4 vào `web/videos/` nếu có tượng mới) → upload lại
-thư mục `web/`. Không cần build, không cần đụng code.
+Sửa `web/content.json` (thêm mp4 vào `web/videos/` nếu có tượng mới) → `git push`.
+Cloudflare tự deploy. Thêm tượng thì chạy lại `./qr.sh https://phat.trustpage.info`.
 
-Thêm tượng mới thì chạy lại `./qr.sh` để có QR của tượng đó.
+## Nếu vẫn muốn dùng apex `trustpage.info`
 
-## Kiểm tra sau khi deploy
+Phải chấp nhận cả ba việc sau, làm thiếu một là hỏng:
 
-- [ ] `https://trustpage.info/` mở được, vào tab Quét QR, camera bật (Safari sẽ hỏi quyền)
-- [ ] Quét `qr/dia-tang.png` → nhảy sang tab Giới thiệu đúng tượng
-- [ ] Video phát được có tiếng (Cloudflare trả `206 Partial Content` cho request Range)
-- [ ] `https://trustpage.info/?v=dia-tang` mở thẳng tab Giới thiệu
-- [ ] Tab bar không bị home indicator che
+1. Trang TrustPage hiện tại trên Vercel sẽ bị thay thế — cần chốt là bỏ hẳn hay dời đi đâu.
+2. Chuyển nameserver `trustpage.info` từ Mat Bao sang Cloudflare.
+3. Trước khi chuyển, **chép lại toàn bộ bản ghi DNS hiện có** (nhất là `MX → mx.zoho.com`
+   và TXT `zoho-verification=...`) rồi tạo lại đủ trong Cloudflare DNS. Thiếu MX là
+   mất email của cả domain.
+
+Rẻ hơn nhiều so với việc dùng subdomain, mà chẳng được thêm gì.
