@@ -32,7 +32,7 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
 - `web/index.html` — 4 tab, scanner, renderer JSON→HTML, lịch sử, xử lý lỗi
 - `web/content.json` — Địa Tạng Vương Bồ Tát đủ 7 section; `temple` và `tuong-2` còn TODO
 - `web/lib/jsQR.js` — vendor 251 KB, không CDN
-- `web/videos/1.mp4`, `3.mp4` — nén 8.7 MB → 3.3 MB (crf 26, +faststart)
+- `web/videos/1.mp4`, `3.mp4` — nén 8.7 MB → 2.0 MB (crf 30, +faststart)
 - `qr.sh` — sinh QR cho mọi id trong content.json
 - `dev.sh` — port rảnh + http-server + ngrok HTTPS + gọi qr.sh
 - `qr/dia-tang.png`, `qr/tuong-2.png` — QR production trỏ trustpage.info
@@ -82,8 +82,23 @@ Host: **Vercel**, không phải Cloudflare Pages. Lý do: domain đã trỏ sẵ
 Mat Bao**, nên không có rủi ro mất email. Đi Cloudflare Pages thì phải dời nameserver và
 tạo lại MX/TXT Zoho — rủi ro thật, đổi lại chẳng được gì cho một trang tĩnh.
 
-Gói Hobby: 100 GB/tháng ≈ 27.000 lượt xem (mỗi lượt ~3,7 MB). Lưu ý Hobby giới hạn
-"non-commercial, personal use" — nếu đây là dự án có thu phí thì phải lên Pro 20 USD/tháng.
+Gói Hobby: 100 GB/tháng. Đã nén video lại ở **crf 30** (2,00 MB thay vì 3,3 MB) để chịu
+được cao điểm 1000 lượt/ngày:
+
+| Lưu lượng | GB/tháng |
+|---|---|
+| 500 lượt/ngày | 32,5 |
+| 1000 lượt/ngày | 65,0 (dư 35%) |
+| 1500 lượt/ngày | 97,4 (sát trần) |
+
+Ở crf 26 cũ thì 1000 lượt/ngày ra 105 GB — vượt trần. Đã soi khung hình cạnh nhau để
+chọn crf 30 ở 720 gốc thay vì hạ 540px (540px nhoè hoa văn áo tượng).
+
+Đường thoát nếu sau này vượt: đưa video sang Cloudflare R2 (egress miễn phí, 10 GB free).
+Trường `video` trong content.json là chuỗi URL nên chỉ cần đổi thành URL R2, **không đổi
+code**. Lúc đó Vercel chỉ còn ~64 KB/lượt.
+
+Chùa không bán gì nên không vướng điều khoản "non-commercial" của Hobby.
 
 Hai điểm dễ vỡ, đã ghi trong DEPLOY.md:
 - **Root Directory = `web`** khi tạo project, không thì Vercel phục vụ gốc repo → 404.
@@ -99,8 +114,9 @@ QR trong `qr/` và `og:url` đã trỏ đúng `https://trustpage.info` — khôn
 
 1. Điền `temple` trong `web/content.json` (tên chùa, địa chỉ, maps, 3 section).
 2. Nội dung các vị còn lại — theo mẫu `tuong-2`, dùng Địa Tạng làm khuôn.
-3. Thay video tạm bằng video thật:
-   `ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 26 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4`
+3. Thay video tạm bằng video thật — **phải dùng crf 30**, đây là điều kiện để chịu
+   1000 lượt/ngày trong hạn mức Vercel Hobby:
+   `ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 30 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4`
    rồi sửa trường `video` trong content.json.
 4. Test trên iPhone thật: `./dev.sh` → mở URL ngrok → quét QR trong app.
 5. Deploy theo `DEPLOY.md`: import repo vào Vercel, **Root Directory = `web`**,

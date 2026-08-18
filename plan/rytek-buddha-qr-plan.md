@@ -156,12 +156,16 @@ Không tự vẽ overlay riêng nữa — controls có sẵn làm đúng việc 
 
 ## 7. Video
 
-Nguồn 720×1280 dọc, H.264 + AAC, 4.6 Mbps. Đã nén còn ~3.3 MB (từ 8.7 MB), mắt thường
-không phân biệt, tải nhanh hơn nhiều trên 4G ở chùa:
+Nguồn 720×1280 dọc, H.264 + AAC, 4.6 Mbps (8.7 MB). Đã nén còn **2.0 MB**:
 
 ```bash
-ffmpeg -y -i "Video 1.mp4" -vcodec libx264 -crf 26 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/1.mp4
+ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 30 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4
 ```
+
+Chọn `crf 30` ở độ phân giải gốc chứ không hạ xuống 540px: đã soi khung hình cạnh nhau,
+crf30-720 (2.0 MB) gần như không khác bản gốc, còn 540px (1.6 MB) thì hoa văn trên áo
+tượng nhoè thấy rõ. Ép xuống 2.0 MB là điều kiện để chịu được 1000 lượt/ngày trong hạn
+mức 100 GB/tháng của Vercel Hobby — ở 3.3 MB thì mức đó ra 105 GB, vượt trần.
 
 `+faststart` bắt buộc — đẩy metadata lên đầu file để video phát trước khi tải xong.
 
