@@ -1,0 +1,220 @@
+{
+  "temple": {
+    "name": "TODO: tên chùa",
+    "address": "TODO: địa chỉ",
+    "maps": "",
+    "sections": [
+      {
+        "title": "Lịch sử",
+        "body": [
+          "TODO: vài dòng về lịch sử chùa."
+        ]
+      },
+      {
+        "title": "Giờ mở cửa",
+        "body": [
+          [
+            "Hằng ngày",
+            "TODO"
+          ],
+          [
+            "Ngày rằm, mùng một",
+            "TODO"
+          ]
+        ]
+      },
+      {
+        "title": "Liên hệ",
+        "body": [
+          [
+            "Điện thoại",
+            "TODO"
+          ],
+          [
+            "Email",
+            "TODO"
+          ]
+        ]
+      }
+    ]
+  },
+  "buddhas": {
+    "dia-tang": {
+      "name": "Địa Tạng Vương Bồ Tát",
+      "han": "地藏王菩薩",
+      "sanskrit": "Kṣitigarbha",
+      "summary": "Đại nguyện cứu độ chúng sinh nơi khổ đau",
+      "video": "videos/1.mp4",
+      "sections": [
+        {
+          "title": "Danh hiệu",
+          "body": [
+            [
+              "Tiếng Việt",
+              "Địa Tạng Vương Bồ Tát"
+            ],
+            [
+              "Tiếng Hán",
+              "地藏王菩薩"
+            ],
+            [
+              "Tiếng Phạn",
+              "Kṣitigarbha"
+            ],
+            [
+              "Ý nghĩa tên gọi",
+              "“Địa” là đất, “Tạng” là kho tàng. Ngài tượng trưng cho tâm nguyện sâu dày, bao dung như lòng đất và chứa đựng vô lượng công đức."
+            ]
+          ]
+        },
+        {
+          "title": "Hạnh nguyện",
+          "body": [
+            "Địa Tạng Vương Bồ Tát nổi tiếng với đại nguyện cứu độ tất cả chúng sinh đang chịu khổ đau, đặc biệt là những chúng sinh trong các cảnh giới tối tăm.",
+            "Ngài phát lời nguyện rộng lớn:",
+            {
+              "quote": "Địa ngục vị không, thệ bất thành Phật;\nChúng sinh độ tận, phương chứng Bồ-đề.",
+              "nghia": "Nếu địa ngục còn chưa trống, con nguyện chưa thành Phật;\nChỉ khi cứu độ hết thảy chúng sinh, con mới chứng quả Bồ-đề."
+            },
+            "Đây là một trong những đại nguyện nổi tiếng và được tôn kính nhất trong Phật giáo Đại thừa."
+          ]
+        },
+        {
+          "title": "Biểu tượng",
+          "body": [
+            [
+              "Tích trượng (錫杖)",
+              "Mở cửa địa ngục, dẫn đường và cứu độ chúng sinh."
+            ],
+            [
+              "Như Ý Châu (如意寶珠)",
+              "Ánh sáng trí tuệ, từ bi và công đức, soi sáng bóng tối vô minh."
+            ],
+            [
+              "Đài sen",
+              "Biểu tượng của sự thanh tịnh và giác ngộ."
+            ],
+            [
+              "Hào quang",
+              "Thể hiện trí tuệ và lòng từ bi vô lượng."
+            ]
+          ]
+        },
+        {
+          "title": "Công hạnh",
+          "body": [
+            "Địa Tạng Vương Bồ Tát được xem là vị Bồ Tát:",
+            [
+              "Cứu độ người đã khuất."
+            ],
+            [
+              "Gia hộ người còn sống biết hiếu kính cha mẹ."
+            ],
+            [
+              "Khuyến khích làm việc thiện, tránh điều ác."
+            ],
+            [
+              "Giúp chúng sinh tăng trưởng lòng từ bi và trí tuệ."
+            ],
+            [
+              "Hướng dẫn người tu tập vượt qua sợ hãi và khổ đau."
+            ]
+          ]
+        },
+        {
+          "title": "Kinh điển",
+          "body": [
+            "Kinh tiêu biểu về Ngài là:",
+            {
+              "quote": "Kinh Địa Tạng Bồ Tát Bổn Nguyện\n(地藏菩薩本願經)"
+            },
+            "Đây là bộ kinh trình bày về đại nguyện, công đức và phương pháp tu học theo hạnh nguyện của Địa Tạng Vương Bồ Tát."
+          ]
+        },
+        {
+          "title": "Danh hiệu thường niệm",
+          "body": [
+            {
+              "quote": "Nam Mô Đại Nguyện Địa Tạng Vương Bồ Tát."
+            }
+          ]
+        },
+        {
+          "title": "Ý nghĩa đối với người Phật tử",
+          "body": [
+            "Địa Tạng Vương Bồ Tát là biểu tượng của:",
+            [
+              "Đại hiếu."
+            ],
+            [
+              "Đại nguyện."
+            ],
+            [
+              "Đại từ bi."
+            ],
+            [
+              "Đức nhẫn nại."
+            ],
+            [
+              "Trách nhiệm cứu giúp mọi chúng sinh không phân biệt."
+            ],
+            "Học theo hạnh nguyện của Ngài là nuôi dưỡng lòng hiếu kính cha mẹ, sống thiện lành, giúp đỡ người khác và kiên trì trên con đường tu tập."
+          ]
+        }
+      ]
+    },
+    "tuong-2": {
+      "name": "TODO: tên vị Phật",
+      "han": "TODO",
+      "sanskrit": "TODO",
+      "summary": "TODO: một dòng tóm tắt, hiện ở tab Lịch sử",
+      "video": "videos/3.mp4",
+      "sections": [
+        {
+          "title": "Danh hiệu",
+          "body": [
+            [
+              "Tiếng Việt",
+              "TODO"
+            ],
+            [
+              "Tiếng Hán",
+              "TODO"
+            ],
+            [
+              "Tiếng Phạn",
+              "TODO"
+            ],
+            [
+              "Ý nghĩa tên gọi",
+              "TODO"
+            ]
+          ]
+        },
+        {
+          "title": "Hạnh nguyện",
+          "body": [
+            "TODO"
+          ]
+        },
+        {
+          "title": "Biểu tượng",
+          "body": [
+            [
+              "TODO",
+              "TODO"
+            ]
+          ]
+        },
+        {
+          "title": "Danh hiệu thường niệm",
+          "body": [
+            {
+              "quote": "TODO"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

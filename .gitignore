@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+
+# QR local sinh theo URL ngrok, đổi mỗi lần chạy dev.sh -> không version
+qr/local-*.png
+
+# Video nguồn chưa nén, chỉ dùng làm đầu vào cho ffmpeg. Bản đã nén nằm ở web/videos/
+/Video *.mp4
