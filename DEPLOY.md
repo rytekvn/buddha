@@ -60,22 +60,18 @@ trên áo tượng nhoè thấy rõ, không đáng.
 
 `+faststart` bắt buộc — đẩy metadata lên đầu file để video phát trước khi tải xong.
 
-### Nếu sau này thật sự vượt trần
+### Đưa video sang Cloudflare R2 (đã chốt làm)
 
-Đường thoát rẻ nhất, **không phải đổi code**: đưa video sang **Cloudflare R2** —
-egress miễn phí hoàn toàn, 10 GB lưu trữ và 10 triệu lượt đọc/tháng đều free.
+Egress của R2 miễn phí, nên video không tính vào 100 GB của Vercel nữa: 1000 lượt/ngày
+chỉ còn **1,9 GB/tháng**. App đã sẵn sàng — chỉ cần sửa `videoBase` trong
+`content.json`, không đụng code.
 
-Trường `video` trong `content.json` chỉ là một chuỗi URL, nên đổi thành URL R2 đầy đủ
-là xong:
+Có một điều kiện đắt: phải dời nameserver `trustpage.info` về Cloudflare (URL `r2.dev`
+bị rate-limit, không dùng cho production được). Toàn bộ quy trình, kèm bảng 5 bản ghi
+DNS phải tạo lại để **không mất email Zoho**: [R2.md](R2.md).
 
-```json
-"video": "https://<bucket>.r2.dev/dia-tang.mp4"
-```
-
-Lúc đó Vercel chỉ còn phục vụ ~64 KB/lượt → 1000 lượt/ngày chỉ tốn **1,9 GB/tháng**,
-coi như không giới hạn. Đây là lý do nội dung để trong JSON chứ không nhúng cứng vào code.
-
-Phương án khác: lên Vercel Pro 20 USD/tháng cho 1 TB. Đắt hơn mà không cần thiết.
+Phương án khác: lên Vercel Pro 20 USD/tháng cho 1 TB. Không phải đụng DNS, nhưng tốn
+tiền hằng tháng và video vẫn nằm trong git.
 
 ## Gói Hobby và chuyện thương mại
 

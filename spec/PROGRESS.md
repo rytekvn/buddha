@@ -32,8 +32,11 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
 - `web/index.html` — 4 tab, scanner, renderer JSON→HTML, lịch sử, xử lý lỗi
 - `web/content.json` — Địa Tạng Vương Bồ Tát đủ 7 section; `temple` và `tuong-2` còn TODO
 - `web/lib/jsQR.js` — vendor 251 KB, không CDN
-- `web/videos/1.mp4`, `3.mp4` — nén 8.7 MB → 2.0 MB (crf 30, +faststart)
+- `web/videos/dia-tang.mp4`, `tuong-2.mp4` — nén 8.7 MB → 2.0 MB (crf 30, +faststart);
+  tên file = id để khớp key trên R2
 - `qr.sh` — sinh QR cho mọi id trong content.json
+- `upload-r2.sh` — đẩy web/videos/*.mp4 lên bucket R2 bằng wrangler
+- `R2.md` — quy trình dời nameserver + dựng R2 + bảng DNS phải tạo lại
 - `dev.sh` — port rảnh + http-server + ngrok HTTPS + gọi qr.sh
 - `qr/dia-tang.png`, `qr/tuong-2.png` — QR production trỏ trustpage.info
 
@@ -94,9 +97,22 @@ Gói Hobby: 100 GB/tháng. Đã nén video lại ở **crf 30** (2,00 MB thay v�
 Ở crf 26 cũ thì 1000 lượt/ngày ra 105 GB — vượt trần. Đã soi khung hình cạnh nhau để
 chọn crf 30 ở 720 gốc thay vì hạ 540px (540px nhoè hoa văn áo tượng).
 
-Đường thoát nếu sau này vượt: đưa video sang Cloudflare R2 (egress miễn phí, 10 GB free).
-Trường `video` trong content.json là chuỗi URL nên chỉ cần đổi thành URL R2, **không đổi
-code**. Lúc đó Vercel chỉ còn ~64 KB/lượt.
+**Đã chốt: đưa video sang Cloudflare R2** để khỏi lo quá tải. Egress R2 miễn phí →
+1000 lượt/ngày còn 1,9 GB/tháng trên Vercel. Lợi ích thứ hai: video ra khỏi git, khỏi
+phình repo mỗi lần thay video.
+
+Code đã sẵn sàng: `content.json` có trường `videoBase`, app ghép `videoBase + tên file`.
+Chuyển host = sửa 1 dòng JSON, không đụng code. URL tuyệt đối trong `video` vẫn được
+dùng nguyên (đã test cả 3 trường hợp).
+
+**Điều kiện chưa làm được:** R2 custom domain đòi domain phải là zone trong Cloudflare,
+mà partial CNAME setup cần Business, subdomain zone cần Enterprise → **phải dời
+nameserver trustpage.info từ Mat Bao về Cloudflare**. URL `r2.dev` bị rate-limit, không
+dùng cho production.
+
+Đã kiểm kê đủ 5 bản ghi DNS hiện có (A, CNAME www, MX Zoho, TXT xác minh, TXT DKIM) và
+ghi vào `R2.md` để tạo lại cho đúng, tránh mất email. Domain chưa có SPF — nên thêm luôn
+lúc đụng DNS.
 
 Chùa không bán gì nên không vướng điều khoản "non-commercial" của Hobby.
 
@@ -122,6 +138,9 @@ QR trong `qr/` và `og:url` đã trỏ đúng `https://trustpage.info` — khôn
 5. Deploy theo `DEPLOY.md`: import repo vào Vercel, **Root Directory = `web`**,
    test trên `*.vercel.app` trước, rồi mới chuyển domain sang.
 6. In QR (đã sinh sẵn, trỏ đúng apex).
+7. R2 theo `R2.md`: dời nameserver về Cloudflare (đối chiếu đủ 5 bản ghi DNS, test
+   email sau khi xong) → tạo bucket → `./upload-r2.sh` → gắn `video.trustpage.info` →
+   sửa `videoBase` → gỡ video khỏi git.
 
 ## Chưa xác nhận với user
 

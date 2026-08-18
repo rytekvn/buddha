@@ -188,6 +188,11 @@ function addHist(id) {
 let DATA = { temple: {}, buddhas: {} };
 let curId = null;
 
+// Ghép videoBase + tên file. Chuyển toàn bộ video sang CDN khác = sửa mỗi `videoBase`
+// trong content.json, không đụng code. URL tuyệt đối trong `video` thì dùng nguyên,
+// để lỡ có một video nằm chỗ khác vẫn được.
+const videoUrl = d => /^https?:\/\//i.test(d.video) ? d.video : (DATA.videoBase || "") + d.video;
+
 function renderIntro() {
   const d = DATA.buddhas[curId];
   if (!d) {
@@ -198,7 +203,7 @@ function renderIntro() {
   const sub = [d.han, d.sanskrit].filter(Boolean).join(" · ");
   $("#pIntro").innerHTML =
     `<div class="ihead"><b>${esc(d.name)}</b><span>${esc(sub)}</span></div>` +
-    `<video id="vid" src="${esc(d.video)}" playsinline controls preload="metadata"></video>` +
+    `<video id="vid" src="${esc(videoUrl(d))}" playsinline controls preload="metadata"></video>` +
     `<div id="introBody"><div class="inner">${renderSections(d.sections)}</div></div>`;
   $("#vid").play().catch(() => {});   // Safari chặn autoplay có tiếng -> nút play sẵn có
 }
