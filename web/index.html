@@ -258,9 +258,10 @@ function renderIntro() {
   const sub = [d.han, d.sanskrit].filter(Boolean).join(" · ");
   $("#pIntro").innerHTML =
     `<div class="ihead"><b>${esc(d.name)}</b><span>${esc(sub)}</span></div>` +
-    `<video id="vid" src="${esc(videoUrl(d))}" playsinline controls preload="metadata"></video>` +
+    // Tượng chưa quay video thì bỏ hẳn thẻ video, đừng để trình phát rỗng đen sì.
+    (d.video ? `<video id="vid" src="${esc(videoUrl(d))}" playsinline controls preload="metadata"></video>` : "") +
     `<div id="introBody"><div class="inner">${renderSections(d.sections)}</div></div>`;
-  $("#vid").play().catch(() => {});   // Safari chặn autoplay có tiếng -> nút play sẵn có
+  $("#vid")?.play().catch(() => {});   // Safari chặn autoplay có tiếng -> nút play sẵn có
 }
 
 function renderHist() {

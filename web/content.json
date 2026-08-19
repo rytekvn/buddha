@@ -47,6 +47,370 @@
     ]
   },
   "buddhas": {
+    "thich-ca": {
+      "name": "Phật Thích Ca Mâu Ni",
+      "han": "釋迦牟尼佛",
+      "sanskrit": "Śākyamuni",
+      "summary": "Đấng giáo chủ cõi Ta Bà, người khai mở con đường giác ngộ",
+      "video": "",
+      "sections": [
+        {
+          "title": "Danh hiệu",
+          "body": [
+            [
+              "Tiếng Việt",
+              "Phật Thích Ca Mâu Ni, thường gọi Đức Bổn Sư"
+            ],
+            [
+              "Tiếng Hán",
+              "釋迦牟尼佛"
+            ],
+            [
+              "Tiếng Phạn",
+              "Śākyamuni"
+            ],
+            [
+              "Ý nghĩa tên gọi",
+              "“Thích Ca” là tên dòng họ, “Mâu Ni” nghĩa là bậc tịch tĩnh. Ghép lại chỉ bậc thánh giả tịch tĩnh của dòng họ Thích Ca."
+            ]
+          ]
+        },
+        {
+          "title": "Hạnh nguyện",
+          "body": [
+            "Vốn là thái tử Tất Đạt Đa, Ngài từ bỏ ngôi vị và đời sống vương giả để đi tìm con đường thoát khổ cho muôn loài. Sau sáu năm khổ hạnh, Ngài chọn con đường Trung Đạo và thành đạo dưới cội Bồ Đề.",
+            "Suốt bốn mươi lăm năm sau đó, Ngài đi khắp nơi thuyết pháp, không phân biệt giàu nghèo hay giai cấp, mở ra con đường mà bất kỳ ai cũng có thể đi."
+          ]
+        },
+        {
+          "title": "Biểu tượng",
+          "body": [
+            [
+              "Ấn Xúc Địa (触地印)",
+              "Tay phải chạm đất, gọi đất chứng minh cho quả vị giác ngộ."
+            ],
+            [
+              "Ấn Thuyết Pháp (說法印)",
+              "Thể hiện lúc Ngài chuyển bánh xe pháp."
+            ],
+            [
+              "Cội Bồ Đề",
+              "Nơi Ngài thành đạo."
+            ],
+            [
+              "Nhục kế trên đỉnh đầu",
+              "Một trong ba mươi hai tướng tốt, biểu thị trí tuệ viên mãn."
+            ],
+            [
+              "Bình bát",
+              "Đời sống khất thực, buông bỏ sở hữu."
+            ]
+          ]
+        },
+        {
+          "title": "Công hạnh",
+          "body": [
+            "Đức Phật Thích Ca là bậc:",
+            [
+              "Khai mở Tứ Diệu Đế và Bát Chánh Đạo."
+            ],
+            [
+              "Thành lập Tăng đoàn, đặt nền cho đời sống tu học tập thể."
+            ],
+            [
+              "Dạy pháp bằng ngôn ngữ đời thường, tùy người mà giảng."
+            ],
+            [
+              "Chỉ ra rằng ai cũng có khả năng giác ngộ, không do dòng dõi quyết định."
+            ]
+          ]
+        },
+        {
+          "title": "Kinh điển",
+          "body": [
+            "Toàn bộ kinh điển Phật giáo đều ghi lại lời dạy của Ngài. Một số bộ tiêu biểu thường tụng tại chùa Việt Nam:",
+            [
+              "Kinh Chuyển Pháp Luân",
+              "Bài pháp đầu tiên, giảng Tứ Diệu Đế."
+            ],
+            [
+              "Kinh Diệu Pháp Liên Hoa (妙法蓮華經)"
+            ],
+            [
+              "Kinh Kim Cang Bát Nhã (金剛般若經)"
+            ]
+          ]
+        },
+        {
+          "title": "Danh hiệu thường niệm",
+          "body": [
+            {
+              "quote": "Nam Mô Bổn Sư Thích Ca Mâu Ni Phật."
+            }
+          ]
+        },
+        {
+          "title": "Ý nghĩa đối với người Phật tử",
+          "body": [
+            "Đức Bổn Sư là biểu tượng của:",
+            [
+              "Sự tỉnh thức."
+            ],
+            [
+              "Trí tuệ soi rõ bản chất khổ đau."
+            ],
+            [
+              "Lòng từ bi bình đẳng với mọi chúng sinh."
+            ],
+            [
+              "Tinh thần tự mình thắp đuốc mà đi."
+            ],
+            "Học theo Ngài là tự nhìn lại tâm mình, không tìm cầu bên ngoài, và kiên trì thực hành điều đã hiểu."
+          ]
+        }
+      ]
+    },
+    "a-di-da": {
+      "name": "Phật A Di Đà",
+      "han": "阿彌陀佛",
+      "sanskrit": "Amitābha",
+      "summary": "Giáo chủ cõi Tây Phương Cực Lạc, bậc Vô Lượng Quang Vô Lượng Thọ",
+      "video": "",
+      "sections": [
+        {
+          "title": "Danh hiệu",
+          "body": [
+            [
+              "Tiếng Việt",
+              "Phật A Di Đà"
+            ],
+            [
+              "Tiếng Hán",
+              "阿彌陀佛"
+            ],
+            [
+              "Tiếng Phạn",
+              "Amitābha (Vô Lượng Quang), Amitāyus (Vô Lượng Thọ)"
+            ],
+            [
+              "Ý nghĩa tên gọi",
+              "Danh hiệu chỉ ánh sáng không cùng và thọ mạng không cùng — trí tuệ soi khắp mười phương, từ bi trải suốt mọi thời."
+            ]
+          ]
+        },
+        {
+          "title": "Hạnh nguyện",
+          "body": [
+            "Khi còn là tỳ kheo Pháp Tạng, Ngài phát bốn mươi tám đại nguyện, xây dựng cõi Tây Phương Cực Lạc làm nơi cho chúng sinh nương về tu học.",
+            "Nguyện thứ mười tám được nhắc đến nhiều nhất, là chỗ dựa của cả pháp môn Tịnh Độ:",
+            {
+              "quote": "Thiết ngã đắc Phật, thập phương chúng sinh,\nchí tâm tín nhạo, dục sinh ngã quốc,\nnãi chí thập niệm, nhược bất sinh giả,\nbất thủ Chánh Giác.",
+              "nghia": "Nếu con thành Phật mà chúng sinh mười phương\nhết lòng tin ưa, muốn sinh về cõi nước con,\ncho đến chỉ mười niệm, mà chẳng được sinh về,\nthì con chẳng giữ ngôi Chánh Giác."
+            },
+            "Chính vì đại nguyện này mà pháp môn niệm Phật trở nên phổ biến: ai cũng hành trì được, không cần nhiều điều kiện."
+          ]
+        },
+        {
+          "title": "Biểu tượng",
+          "body": [
+            [
+              "Ấn tiếp dẫn",
+              "Tay đưa ra đón, thể hiện nguyện tiếp dẫn chúng sinh về cõi Cực Lạc."
+            ],
+            [
+              "Đài sen",
+              "Nơi hóa sinh của người vãng sinh."
+            ],
+            [
+              "Hào quang vô lượng",
+              "Ánh sáng soi khắp mười phương, không gì ngăn ngại."
+            ],
+            [
+              "Hai vị hiệp sĩ",
+              "Quán Thế Âm Bồ Tát bên trái, Đại Thế Chí Bồ Tát bên phải, hợp thành Tây Phương Tam Thánh."
+            ]
+          ]
+        },
+        {
+          "title": "Công hạnh",
+          "body": [
+            "Phật A Di Đà được tôn kính là vị Phật:",
+            [
+              "Tiếp dẫn người niệm Phật về cõi Cực Lạc."
+            ],
+            [
+              "Mở ra pháp môn dễ hành trì cho mọi căn cơ."
+            ],
+            [
+              "Là chỗ nương tựa của người lâm chung."
+            ],
+            [
+              "Nuôi lớn lòng tin và sự nhất tâm nơi người tu."
+            ]
+          ]
+        },
+        {
+          "title": "Kinh điển",
+          "body": [
+            "Ba bộ kinh nền tảng của Tịnh Độ tông, gọi chung là Tịnh Độ Tam Kinh:",
+            [
+              "Kinh A Di Đà (佛說阿彌陀經)"
+            ],
+            [
+              "Kinh Vô Lượng Thọ (無量壽經)"
+            ],
+            [
+              "Kinh Quán Vô Lượng Thọ (觀無量壽經)"
+            ]
+          ]
+        },
+        {
+          "title": "Danh hiệu thường niệm",
+          "body": [
+            {
+              "quote": "Nam Mô A Di Đà Phật."
+            }
+          ]
+        },
+        {
+          "title": "Ý nghĩa đối với người Phật tử",
+          "body": [
+            "Phật A Di Đà là biểu tượng của:",
+            [
+              "Ánh sáng trí tuệ không cùng."
+            ],
+            [
+              "Đại nguyện rộng lớn."
+            ],
+            [
+              "Niềm tin và sự nhất tâm."
+            ],
+            [
+              "Chỗ nương tựa lúc yếu lòng nhất."
+            ],
+            "Học theo Ngài là giữ tâm chuyên nhất giữa đời nhiều xao động, và tin rằng con đường tu tập luôn mở cho bất cứ ai thật lòng muốn bước vào."
+          ]
+        }
+      ]
+    },
+    "quan-am": {
+      "name": "Quán Thế Âm Bồ Tát",
+      "han": "觀世音菩薩",
+      "sanskrit": "Avalokiteśvara",
+      "summary": "Đại từ đại bi, lắng nghe tiếng khổ mà cứu độ",
+      "video": "",
+      "sections": [
+        {
+          "title": "Danh hiệu",
+          "body": [
+            [
+              "Tiếng Việt",
+              "Quán Thế Âm Bồ Tát, còn gọi Quán Tự Tại Bồ Tát"
+            ],
+            [
+              "Tiếng Hán",
+              "觀世音菩薩"
+            ],
+            [
+              "Tiếng Phạn",
+              "Avalokiteśvara"
+            ],
+            [
+              "Ý nghĩa tên gọi",
+              "“Quán” là quán chiếu, soi xét; “Thế Âm” là âm thanh của thế gian. Danh hiệu chỉ vị Bồ Tát lắng nghe tiếng kêu khổ của chúng sinh mà tìm đến cứu độ."
+            ]
+          ]
+        },
+        {
+          "title": "Hạnh nguyện",
+          "body": [
+            "Quán Thế Âm Bồ Tát là hiện thân của lòng từ bi trong Phật giáo Đại thừa. Ngài nguyện lắng nghe tiếng khổ của muôn loài, hễ chúng sinh thành tâm xưng niệm danh hiệu thì Ngài tìm đến cứu giúp.",
+            "Phẩm Phổ Môn tán thán năng lực ấy:",
+            {
+              "quote": "Chúng sinh bị khốn ách,\nVô lượng khổ bức thân,\nQuán Âm diệu trí lực,\nNăng cứu thế gian khổ.",
+              "nghia": "Chúng sinh gặp hoạn nạn, vô vàn khổ đau ép bức thân này;\nSức trí tuệ nhiệm mầu của Quán Âm cứu được nỗi khổ của thế gian."
+            },
+            "Hạnh nguyện của Ngài thường được gọi gọn là “tầm thanh cứu khổ” — theo tiếng mà cứu nạn."
+          ]
+        },
+        {
+          "title": "Biểu tượng",
+          "body": [
+            [
+              "Tịnh bình (淨瓶)",
+              "Đựng nước cam lồ, tượng trưng cho lòng từ bi làm dịu mọi khổ não."
+            ],
+            [
+              "Cành dương liễu (楊柳枝)",
+              "Dùng rưới nước cam lồ; cành liễu mềm dẻo, biểu thị đức nhu hòa nhẫn nhục."
+            ],
+            [
+              "Mũ có hình Phật A Di Đà",
+              "Thể hiện Ngài là thị giả của Đức A Di Đà nơi cõi Cực Lạc."
+            ],
+            [
+              "Đài sen",
+              "Sự thanh tịnh, không nhiễm giữa đời."
+            ]
+          ]
+        },
+        {
+          "title": "Công hạnh",
+          "body": [
+            "Quán Thế Âm Bồ Tát được tôn kính là vị Bồ Tát:",
+            [
+              "Cứu khổ cứu nạn, che chở người gặp hiểm nguy."
+            ],
+            [
+              "Hóa hiện nhiều thân tướng khác nhau, tùy căn cơ từng người mà độ."
+            ],
+            [
+              "Ban sự không sợ hãi, nên còn được xưng là Thí Vô Úy."
+            ],
+            [
+              "Nuôi lớn lòng từ bi và tâm biết lắng nghe nơi người tu tập."
+            ]
+          ]
+        },
+        {
+          "title": "Kinh điển",
+          "body": [
+            "Kinh tiêu biểu về Ngài là:",
+            {
+              "quote": "Phẩm Phổ Môn, Kinh Diệu Pháp Liên Hoa\n(妙法蓮華經 · 觀世音菩薩普門品)"
+            },
+            "Ngoài ra còn Chú Đại Bi, được trì tụng rộng rãi trong các chùa Việt Nam."
+          ]
+        },
+        {
+          "title": "Danh hiệu thường niệm",
+          "body": [
+            {
+              "quote": "Nam Mô Đại Từ Đại Bi Cứu Khổ Cứu Nạn\nQuán Thế Âm Bồ Tát."
+            }
+          ]
+        },
+        {
+          "title": "Ý nghĩa đối với người Phật tử",
+          "body": [
+            "Quán Thế Âm Bồ Tát là biểu tượng của:",
+            [
+              "Đại từ đại bi."
+            ],
+            [
+              "Đức lắng nghe."
+            ],
+            [
+              "Lòng nhẫn nhục nhu hòa."
+            ],
+            [
+              "Sự chở che cho kẻ yếu thế."
+            ],
+            "Học theo hạnh nguyện của Ngài là tập lắng nghe nỗi khổ của người khác trước khi vội phán xét, và ra tay giúp đỡ trong khả năng của mình."
+          ]
+        }
+      ]
+    },
     "dia-tang": {
       "name": "Địa Tạng Vương Bồ Tát",
       "han": "地藏王菩薩",
@@ -171,55 +535,114 @@
         }
       ]
     },
-    "tuong-2": {
-      "name": "TODO: tên vị Phật",
-      "han": "TODO",
-      "sanskrit": "TODO",
-      "summary": "TODO: một dòng tóm tắt, hiện ở tab Lịch sử",
-      "video": "tuong-2.mp4",
+    "di-lac": {
+      "name": "Di Lặc Bồ Tát",
+      "han": "彌勒菩薩",
+      "sanskrit": "Maitreya",
+      "summary": "Vị Phật tương lai, biểu tượng của hoan hỷ và bao dung",
+      "video": "",
       "sections": [
         {
           "title": "Danh hiệu",
           "body": [
             [
               "Tiếng Việt",
-              "TODO"
+              "Di Lặc Bồ Tát, còn gọi Từ Thị Bồ Tát"
             ],
             [
               "Tiếng Hán",
-              "TODO"
+              "彌勒菩薩"
             ],
             [
               "Tiếng Phạn",
-              "TODO"
+              "Maitreya"
             ],
             [
               "Ý nghĩa tên gọi",
-              "TODO"
+              "Maitreya bắt nguồn từ chữ “maitrī” nghĩa là lòng từ. Vì vậy Ngài còn được gọi là Từ Thị — bậc mang họ Từ."
             ]
           ]
         },
         {
           "title": "Hạnh nguyện",
           "body": [
-            "TODO"
+            "Di Lặc Bồ Tát hiện ở cung trời Đâu Suất, là vị sẽ hạ sinh xuống cõi này và thành Phật trong tương lai, tiếp nối Đức Thích Ca.",
+            "Kinh chép rằng khi ấy Ngài thành đạo dưới cội Long Hoa và mở ba hội thuyết pháp, gọi là Long Hoa tam hội, độ vô số chúng sinh."
           ]
         },
         {
           "title": "Biểu tượng",
           "body": [
             [
-              "TODO",
-              "TODO"
+              "Nụ cười rộng mở",
+              "Tâm hoan hỷ, buông bỏ phiền não."
+            ],
+            [
+              "Bụng lớn",
+              "Lòng bao dung, chứa được những điều khó chứa của thế gian."
+            ],
+            [
+              "Túi vải",
+              "Theo hình tượng Bố Đại Hòa Thượng — đựng mọi thứ nhận được rồi lại cho đi."
+            ],
+            [
+              "Tràng hạt",
+              "Sự tu tập không gián đoạn giữa đời sống thường ngày."
             ]
+          ]
+        },
+        {
+          "title": "Công hạnh",
+          "body": [
+            "Di Lặc Bồ Tát được tôn kính là vị Bồ Tát:",
+            [
+              "Sẽ thành Phật trong tương lai, nối tiếp chánh pháp."
+            ],
+            [
+              "Nhắc người đời sống hoan hỷ, bớt chấp nê."
+            ],
+            [
+              "Dạy đức bao dung, tha thứ."
+            ],
+            [
+              "Gieo niềm tin rằng chánh pháp không dứt."
+            ]
+          ]
+        },
+        {
+          "title": "Kinh điển",
+          "body": [
+            "Kinh tiêu biểu về Ngài:",
+            {
+              "quote": "Kinh Di Lặc Hạ Sinh Thành Phật\n(彌勒下生成佛經)"
+            }
           ]
         },
         {
           "title": "Danh hiệu thường niệm",
           "body": [
             {
-              "quote": "TODO"
+              "quote": "Nam Mô Đương Lai Hạ Sinh Di Lặc Tôn Phật."
             }
+          ]
+        },
+        {
+          "title": "Ý nghĩa đối với người Phật tử",
+          "body": [
+            "Di Lặc Bồ Tát là biểu tượng của:",
+            [
+              "Tâm hoan hỷ."
+            ],
+            [
+              "Lòng bao dung."
+            ],
+            [
+              "Sự buông xả."
+            ],
+            [
+              "Niềm tin vào tương lai."
+            ],
+            "Học theo hạnh của Ngài là tập cười được trước những điều không vừa ý, và rộng lòng với người thay vì giữ mãi trong tâm."
           ]
         }
       ]

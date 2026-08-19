@@ -8,7 +8,8 @@ Web app tĩnh, tự quét QR, 4 tab, nội dung trong 1 file JSON. Domain **trus
 đã có, chưa deploy. Không app iOS, không AR/3D, không CMS, không database.
 Plan cũ archive ở `plan/OLD-rytek-buddha-ar-plan.md`.
 
-Cấu trúc xong và chạy được. Nội dung: Địa Tạng Vương Bồ Tát đã đầy đủ, phần còn lại TODO.
+Cấu trúc xong và chạy được. **Nội dung 5 vị đã đầy đủ**, mỗi vị 7 section. Phần
+`temple` (thông tin chùa) còn TODO — user sẽ gửi sau.
 
 ## Cấu trúc JSON đã chuẩn hoá
 
@@ -30,7 +31,20 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
 - Spec + 22 acceptance + đặc tả JSON: `spec/README.md`
 - `DEPLOY.md` — các bước lên Cloudflare Pages + trustpage.info
 - `web/index.html` — 4 tab, scanner, renderer JSON→HTML, lịch sử, xử lý lỗi
-- `web/content.json` — Địa Tạng Vương Bồ Tát đủ 7 section; `temple` và `tuong-2` còn TODO
+- `web/content.json` — 5 vị, mỗi vị đủ 7 section (~22 KB):
+
+  | id | Tên | Video |
+  |---|---|---|
+  | `thich-ca` | Phật Thích Ca Mâu Ni | chưa có |
+  | `a-di-da` | Phật A Di Đà | chưa có |
+  | `quan-am` | Quán Thế Âm Bồ Tát | chưa có |
+  | `dia-tang` | Địa Tạng Vương Bồ Tát | `dia-tang.mp4` |
+  | `di-lac` | Di Lặc Bồ Tát | chưa có |
+
+  ⚠️ **Nội dung 4 vị mới do tôi soạn theo khuôn Địa Tạng user đã gửi**, dựa trên tài
+  liệu Phật giáo Đại thừa phổ thông. **Cần nhà chùa duyệt lại trước khi in QR** — đây
+  là văn bản giáo lý, sai một chữ là chuyện lớn với chùa. Riêng Địa Tạng là nguyên văn
+  user gửi, không sửa.
 - `web/lib/jsQR.js` — vendor 251 KB, không CDN
 - `web/videos/dia-tang.mp4`, `tuong-2.mp4` — nén 8.7 MB → 2.0 MB (crf 30, +faststart);
   tên file = id để khớp key trên R2
@@ -41,7 +55,7 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
 - `upload-r2.sh` — đẩy web/videos/*.mp4 lên bucket R2 bằng wrangler
 - `R2.md` — quy trình dời nameserver + dựng R2 + bảng DNS phải tạo lại
 - `dev.sh` — port rảnh + http-server + ngrok HTTPS + gọi qr.sh
-- `qr/dia-tang.png`, `qr/tuong-2.png` — QR production trỏ trustpage.info
+- `qr/*.png` — 5 QR production trỏ `https://trustpage.info/?v=<id>`
 
 ## Đã tự kiểm tra (preview 375×812)
 
@@ -51,6 +65,8 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
   sau câu kệ, đây là lý do `body` phải là mảng có thứ tự)
 - Tab 4: 3 section, ẩn nút Chỉ đường vì `maps` rỗng
 - Rời tab 2 → `video.paused === true`
+- Cả 5 vị render đúng 7 section; tượng chưa có video thì **bỏ hẳn thẻ `<video>`**,
+  không để trình phát rỗng đen sì (chỉ `dia-tang` có thẻ video)
 - `idFrom()` đúng 6 ca: URL có `?v=`, URL có port, id trần, id thừa khoảng trắng,
   URL thiếu param, chuỗi rác
 - JS qua `node --check`, JSON qua `json.load`
@@ -156,9 +172,9 @@ Chi tiết kỹ thuật đáng nhớ:
 
 ## Việc còn lại
 
-1. Điền `temple` trong `web/content.json` (tên chùa, địa chỉ, maps, 3 section).
-2. Nội dung các vị còn lại — theo mẫu `tuong-2`, dùng Địa Tạng làm khuôn.
-3. Thay video tạm bằng video thật — **phải dùng crf 30**, đây là điều kiện để chịu
+1. **Nhà chùa duyệt nội dung 4 vị tôi soạn** (thich-ca, a-di-da, quan-am, di-lac).
+2. Điền `temple` trong `web/content.json` — user sẽ gửi thông tin chùa.
+3. Quay/nén video cho 4 vị chưa có — **phải dùng crf 30**, đây là điều kiện để chịu
    1000 lượt/ngày trong hạn mức Vercel Hobby:
    `ffmpeg -y -i "nguồn.mp4" -vcodec libx264 -crf 30 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/<id>.mp4`
    rồi sửa trường `video` trong content.json.
@@ -174,6 +190,9 @@ Chi tiết kỹ thuật đáng nhớ:
 
 ## Chưa xác nhận với user
 
-- `Video 3.mp4` là tượng thứ hai hay bản nháp khác của cùng tượng (đang để tạm id
-  `tuong-2`, đổi slug khi biết tên thật).
-- Tên chùa và thông tin tab 4.
+- **`web/videos/tuong-2.mp4` hiện không id nào trỏ tới** (nén từ `Video 3.mp4`). Chưa
+  biết trong đó là tượng nào. Khi user cho biết thì đổi tên file theo id tương ứng và
+  điền vào trường `video`. Nguồn `Video 3.mp4` vẫn còn trên máy nên nén lại lúc nào cũng được.
+- Thông tin chùa cho tab 4 (user sẽ gửi).
+- Danh sách tượng thật của chùa — 5 vị hiện tại là những vị phổ biến nhất trong chùa
+  Việt, có thể chùa có thêm hoặc không có vị nào trong số này.
