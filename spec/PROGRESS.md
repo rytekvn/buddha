@@ -190,9 +190,14 @@ Chi tiết kỹ thuật đáng nhớ:
 
 ## Chưa xác nhận với user
 
-- **`web/videos/tuong-2.mp4` hiện không id nào trỏ tới** (nén từ `Video 3.mp4`). Chưa
-  biết trong đó là tượng nào. Khi user cho biết thì đổi tên file theo id tương ứng và
-  điền vào trường `video`. Nguồn `Video 3.mp4` vẫn còn trên máy nên nén lại lúc nào cũng được.
+- **Chọn bản dựng nào cho Địa Tạng.** `Video 1.mp4` và `Video 3.mp4` đều là Địa Tạng
+  Vương Bồ Tát, cùng 15,09s, cùng 720×1280, cùng có tiếng — chỉ khác góc máy:
+  Video 1 zoom từ xa vào, Video 3 mở từ cận mặt rồi lùi ra.
+  Đang dùng **Video 1**. Muốn đổi sang Video 3:
+  `ffmpeg -y -i "Video 3.mp4" -vcodec libx264 -crf 30 -preset slow -movflags +faststart -acodec aac -b:a 96k web/videos/dia-tang.mp4`
+  Đã gỡ `web/videos/tuong-2.mp4` (bản nén của Video 3) vì không id nào trỏ tới; nguồn
+  vẫn còn trên máy.
+- **Cả hai video có watermark "Ai" ở góc trên trái.** Cần bản sạch trước khi in QR.
 - Thông tin chùa cho tab 4 (user sẽ gửi).
 - Danh sách tượng thật của chùa — 5 vị hiện tại là những vị phổ biến nhất trong chùa
   Việt, có thể chùa có thêm hoặc không có vị nào trong số này.
