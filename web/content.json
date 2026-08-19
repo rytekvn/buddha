@@ -1,5 +1,12 @@
 {
   "videoBase": "videos/",
+  "ads": {
+    "client": "",
+    "slots": {
+      "hist": "",
+      "temple": ""
+    }
+  },
   "temple": {
     "name": "TODO: tên chùa",
     "address": "TODO: địa chỉ",

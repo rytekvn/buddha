@@ -94,6 +94,16 @@
           background:var(--gold); color:#12100e; font-weight:600;
           border-radius:10px; text-decoration:none}
 
+  /* ---- quảng cáo ---- */
+  .adwrap{margin:26px 0 4px}
+  .adlabel{display:block; font-size:10px; letter-spacing:1.2px; text-transform:uppercase;
+           color:#6f665a; margin-bottom:6px}
+  .adbox{display:block; min-height:100px}   /* giữ chỗ sẵn cho khỏi giật layout */
+
+  .foot{margin-top:30px; padding-top:18px; border-top:1px solid var(--line);
+        font-size:13px; color:var(--dim); text-align:center}
+  .foot a{color:var(--dim)}
+
   /* ---- tab bar ---- */
   nav{flex:none; display:flex; border-top:1px solid var(--line);
       background:rgba(18,16,14,.94); backdrop-filter:blur(12px);
@@ -117,7 +127,7 @@
     <div id="scanMsg"></div>
   </div>
   <div class="panel" id="pIntro"  data-p="intro"></div>
-  <div class="panel" id="pHist"   data-p="hist"></div>
+  <div class="panel" id="pHist"   data-p="hist"><div id="histList"></div><div id="histAd"></div></div>
   <div class="panel" id="pTemple" data-p="temple"></div>
 </main>
 
@@ -175,6 +185,51 @@ function renderBody(body) {
 const renderSections = list => (list || [])
   .map(s => `<div class="sec"><h2>${esc(s.title)}</h2>${renderBody(s.body)}</div>`).join("");
 
+/* ---------------------------------------------------------------------------
+   AdSense. Tắt hoàn toàn khi `ads.client` trong content.json còn rỗng — chưa được
+   Google duyệt thì trang chạy y như cũ, không tải script bên thứ ba nào.
+
+   Banner CHỈ đặt ở tab Lịch sử và Thông tin chùa. Không bao giờ đặt ở tab Quét QR
+   (đang mở camera) và tab Giới thiệu (có video thuyết minh) — quảng cáo cạnh hình
+   tượng là thứ phải tránh.
+   --------------------------------------------------------------------------- */
+const AD_TABS = { hist: 1, temple: 1 };
+let adsScriptAdded = false;
+
+const adEnabled = tab => !!(DATA.ads?.client && DATA.ads?.slots?.[tab]);
+
+function adHtml(tab) {
+  if (!adEnabled(tab)) return "";
+  return `<div class="adwrap"><span class="adlabel">Quảng cáo</span>` +
+    `<ins class="adsbygoogle adbox" style="display:block"` +
+    ` data-ad-client="${esc(DATA.ads.client)}"` +
+    ` data-ad-slot="${esc(DATA.ads.slots[tab])}"` +
+    ` data-ad-format="auto" data-full-width-responsive="true"></ins></div>`;
+}
+
+function loadAdScript() {
+  if (adsScriptAdded || !DATA.ads?.client) return;
+  adsScriptAdded = true;
+  const sc = document.createElement("script");
+  sc.async = true;
+  sc.crossOrigin = "anonymous";
+  sc.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="
+         + encodeURIComponent(DATA.ads.client);
+  document.head.appendChild(sc);
+}
+
+// AdSense từ chối render trong khung rộng 0px, mà panel lúc ẩn là display:none.
+// Nên chỉ đẩy sau khi panel đã hiện và đã có bề ngang thật.
+function pushAds(tab) {
+  const panel = $(`[data-p="${tab}"]`);
+  if (!panel) return;
+  panel.querySelectorAll("ins.adsbygoogle:not([data-pushed])").forEach(ins => {
+    if (!ins.offsetWidth) return;
+    ins.setAttribute("data-pushed", "1");
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}) } catch {}
+  });
+}
+
 /* ------------------------------------------------------------------ lịch sử */
 const HKEY = "buddha.history";
 const readHist = () => { try { return JSON.parse(localStorage.getItem(HKEY)) || [] } catch { return [] } };
@@ -210,7 +265,7 @@ function renderIntro() {
 
 function renderHist() {
   const h = readHist().filter(x => DATA.buddhas[x.id]);   // bỏ id đã gỡ khỏi content.json
-  $("#pHist").innerHTML = '<div class="inner">' + (h.length
+  $("#histList").innerHTML = '<div class="inner">' + (h.length
     ? h.map(x => {
         const d = DATA.buddhas[x.id];
         return `<button class="item" data-id="${esc(x.id)}"><b>${esc(d.name)}</b>` +
@@ -218,6 +273,10 @@ function renderHist() {
                `<time>${new Date(x.t).toLocaleString("vi-VN")}</time></button>`;
       }).join("")
     : '<p class="empty">Chưa quét tượng nào.</p>') + '</div>';
+
+  // Ô quảng cáo nằm ngoài phần render lại, để đổi tab không gọi lại quảng cáo mỗi lần.
+  const ad = $("#histAd");
+  if (adEnabled("hist") && !ad.innerHTML) ad.innerHTML = '<div class="inner">' + adHtml("hist") + '</div>';
 }
 
 function renderTemple() {
@@ -225,7 +284,8 @@ function renderTemple() {
   $("#pTemple").innerHTML = '<div class="inner">' +
     `<div class="card"><b>${esc(t.name)}</b><span>${esc(t.address)}</span>` +
     (t.maps ? `<a href="${esc(t.maps)}" target="_blank" rel="noopener">Chỉ đường</a>` : "") +
-    `</div>${renderSections(t.sections)}</div>`;
+    `</div>${renderSections(t.sections)}${adHtml("temple")}` +
+    `<p class="foot"><a href="privacy.html">Chính sách riêng tư</a></p></div>`;
 }
 
 /* -------------------------------------------------------------- chuyển tab */
@@ -235,6 +295,8 @@ function show(k) {
   if (k !== "intro") { const v = $("#vid"); if (v) v.pause(); }
   if (k === "hist") renderHist();
   k === "scan" ? startCam() : stopCam();      // rời tab quét là tắt camera ngay
+
+  if (AD_TABS[k]) { loadAdScript(); requestAnimationFrame(() => pushAds(k)); }
 }
 
 function openBuddha(id) {

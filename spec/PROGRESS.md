@@ -34,6 +34,9 @@ Thứ tự trong `body` là thứ tự hiển thị. Đặc tả đầy đủ: `
 - `web/lib/jsQR.js` — vendor 251 KB, không CDN
 - `web/videos/dia-tang.mp4`, `tuong-2.mp4` — nén 8.7 MB → 2.0 MB (crf 30, +faststart);
   tên file = id để khớp key trên R2
+- `web/privacy.html` — chính sách riêng tư (camera, lịch sử localStorage, cookie quảng cáo)
+- `web/ads.txt` — mẫu, còn comment; bỏ `#` sau khi có publisher ID
+- `ADSENSE.md` — quy trình đăng ký, lấy ID, bật consent, kiểm tra
 - `qr.sh` — sinh QR cho mọi id trong content.json
 - `upload-r2.sh` — đẩy web/videos/*.mp4 lên bucket R2 bằng wrangler
 - `R2.md` — quy trình dời nameserver + dựng R2 + bảng DNS phải tạo lại
@@ -126,6 +129,31 @@ và gắn sang project mới. Không xoá project cũ, chỉ gỡ domain (xoá l
 
 QR trong `qr/` và `og:url` đã trỏ đúng `https://trustpage.info` — không phải sinh lại.
 
+## Quảng cáo AdSense (chốt 18/08/2026)
+
+User quyết dùng AdSense sau khi đã nghe các rủi ro. Đã cài xong, **đang tắt**:
+`ads.client` trong content.json rỗng → không tải script bên thứ ba nào.
+
+Lưu ý đã nêu với user và user vẫn chọn tiếp tục:
+- AdMob **không dùng cho web**, chỉ cho app native → phải là AdSense.
+- Chi phí hạ tầng hiện tại là **0 USD/tháng**; sau khi sang R2 thì phải tới ~53.000
+  lượt/ngày mới chạm trần Vercel. Tức là chưa có khoản nào cần bù.
+- Rủi ro bị từ chối vì "thin content" là có thật — đừng nộp khi mới 1–2 tượng.
+
+Giới hạn vị trí đã cứng trong code (hằng `AD_TABS`):
+- Tab 1 Quét QR: **không** — đang mở camera
+- Tab 2 Giới thiệu: **không** — có video và hình tượng
+- Tab 3 Lịch sử + Tab 4 Thông tin chùa: có
+
+Chi tiết kỹ thuật đáng nhớ:
+- Panel lúc ẩn là `display:none`, AdSense từ chối render trong khung rộng 0px → chỉ
+  push sau `requestAnimationFrame` và khi `offsetWidth > 0`. Nếu chưa có bề ngang thì
+  **không** đánh dấu `data-pushed`, lần vào tab sau tự thử lại.
+- Ô quảng cáo tab Lịch sử nằm ngoài phần render lại (`#histAd` tách khỏi `#histList`),
+  nên đổi tab không gọi lại quảng cáo — gọi lại liên tục là vi phạm chính sách.
+- Consent: bật CMP có sẵn của Google (AdSense → Privacy & messaging), **không tự viết
+  banner cookie**.
+
 ## Việc còn lại
 
 1. Điền `temple` trong `web/content.json` (tên chùa, địa chỉ, maps, 3 section).
@@ -138,7 +166,9 @@ QR trong `qr/` và `og:url` đã trỏ đúng `https://trustpage.info` — khôn
 5. Deploy theo `DEPLOY.md`: import repo vào Vercel, **Root Directory = `web`**,
    test trên `*.vercel.app` trước, rồi mới chuyển domain sang.
 6. In QR (đã sinh sẵn, trỏ đúng apex).
-7. R2 theo `R2.md`: dời nameserver về Cloudflare (đối chiếu đủ 5 bản ghi DNS, test
+7. AdSense theo `ADSENSE.md`: deploy + điền nội dung xong đã, rồi mới đăng ký. Có ID
+   thì điền vào `ads` trong content.json, sửa `web/ads.txt`, bật CMP.
+8. R2 theo `R2.md`: dời nameserver về Cloudflare (đối chiếu đủ 5 bản ghi DNS, test
    email sau khi xong) → tạo bucket → `./upload-r2.sh` → gắn `video.trustpage.info` →
    sửa `videoBase` → gỡ video khỏi git.
 

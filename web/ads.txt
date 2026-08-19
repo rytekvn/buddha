@@ -1,0 +1,7 @@
+# ads.txt — AdSense yêu cầu file này ở gốc domain để xác nhận ai được bán quảng cáo
+# cho trustpage.info. Thiếu nó thì doanh thu bị giới hạn.
+#
+# Sau khi AdSense duyệt, bỏ dấu # ở dòng dưới và thay pub-0000000000000000 bằng
+# publisher ID thật (AdSense > Account > Settings > Account information).
+#
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

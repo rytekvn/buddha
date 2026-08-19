@@ -31,6 +31,11 @@ Một file duy nhất `web/content.json`. Không database — đây là toàn b�
     "sections": [ ... ]    // giống hệt sections của vị Phật
   },
 
+  "ads": {                 // rỗng client = tắt hoàn toàn, không tải script bên thứ ba
+    "client": "",          // "ca-pub-XXXXXXXXXXXXXXXX"
+    "slots": { "hist": "", "temple": "" }
+  },
+
   "buddhas": {
     "<id>": {              // id = slug, cũng là giá trị ?v= trong QR
       "name": "Địa Tạng Vương Bồ Tát",
@@ -99,7 +104,13 @@ người Phật tử). Thêm kiểu mới chỉ khi có nội dung thật sự k
 | 1 | Quét QR | camera + khung ngắm, quét ra thì sang tab 2 |
 | 2 | Giới thiệu | tên + Hán + Phạn, video thuyết minh, các section |
 | 3 | Lịch sử | list tượng đã quét — tên, `summary`, thời điểm. **Không có video** |
-| 4 | Thông tin chùa | tên, địa chỉ, Chỉ đường, các section của chùa |
+| 4 | Thông tin chùa | tên, địa chỉ, Chỉ đường, các section của chùa, link Chính sách riêng tư |
+
+### Quảng cáo
+
+Banner AdSense **chỉ** ở tab 3 và tab 4. Không bao giờ ở tab 1 (đang mở camera) và
+tab 2 (có video, hình tượng). Giới hạn nằm ở hằng `AD_TABS` trong `index.html`.
+Hướng dẫn bật: [ADSENSE.md](../ADSENSE.md).
 
 ## Acceptance
 
@@ -132,3 +143,15 @@ người Phật tử). Thêm kiểu mới chỉ khi có nội dung thật sự k
 **Chùa & chung**
 21. Tab 4 hiện tên + địa chỉ + các section; `maps` rỗng thì ẩn nút Chỉ đường.
 22. Tab bar không bị home indicator của iPhone che (safe-area).
+23. Tab 4 có link "Chính sách riêng tư" mở được `privacy.html`.
+
+**Quảng cáo**
+24. `ads.client` rỗng → **không** tải script AdSense, **không** có thẻ `<ins>` nào.
+25. `ads.client` có giá trị → script nạp 1 lần duy nhất, đúng `?client=`.
+26. Thẻ quảng cáo chỉ xuất hiện ở tab 3 và tab 4; tab 1 và tab 2 luôn bằng 0.
+27. Đổi tab qua lại nhiều lần → mỗi ô quảng cáo chỉ gọi **một lần**
+    (chặn bằng `data-pushed`; gọi lại liên tục là vi phạm chính sách AdSense).
+28. Ô quảng cáo chỉ được gọi khi panel đã hiện và có bề ngang > 0 — AdSense từ chối
+    render trong khung rộng 0px, mà panel lúc ẩn là `display:none`.
+29. Mỗi ô quảng cáo có nhãn "Quảng cáo" phía trên.
+30. `ads.txt` mở được tại gốc domain.
